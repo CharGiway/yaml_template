@@ -1,0 +1,446 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"labels":{"k8s-app":"engine-test-a800","qcloud-app":"engine-test-a800"},"name":"engine-test-a800","namespace":"test"},"spec":{"podManagementPolicy":"OrderedReady","replicas":2,"revisionHistoryLimit":10,"selector":{"matchLabels":{"k8s-app":"engine-test-a800","qcloud-app":"engine-test-a800"}},"serviceName":"engine-test-a800-headless","template":{"metadata":{"annotations":{"qcloud-redeploy-timestamp":"1728911403253"},"creationTimestamp":null,"labels":{"k8s-app":"engine-test-a800","qcloud-app":"engine-test-a800"}},"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"gpuName","operator":"In","values":["A800"]}]}]}},"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app","operator":"In","values":["engine-test-a800"]}]},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"command":["bash","-c","sleep infinity"],"env":[{"name":"BASH_ENV","value":"/etc/bash.bashrc"},{"name":"CUDA_MODULE_LOADING","value":"LAZY"},{"name":"LC_ALL","value":"C.UTF-8"},{"name":"TORCH_CUDA_ARCH_LIST","value":"5.2 6.0 6.1 7.0 7.5 8.0 8.6+PTX"},{"name":"PYTHONIOENCODING","value":"utf-8"},{"name":"SHELL","value":"/bin/bash"},{"name":"NVIDIA_REQUIRE_CUDA","value":"cuda\u003e=9.0"},{"name":"SSH_OPTIONS","value":"-o PasswordAuthentication=no -o StrictHostKeyChecking=no"},{"name":"CUDA_CACHE_DISABLE","value":"1"},{"name":"JUPYTER_PORT","value":"8888"},{"name":"NVIDIA_DRIVER_CAPABILITIES","value":"compute,utility,video"},{"name":"COMPUTING_PLATFORM_TASKID","value":"55764299cd75d4a8d0e6b82c49078206"},{"name":"POD_IP","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"status.podIP"}}},{"name":"COMPUTING_PLATFORM_REPORT_URL","value":"http://prd-yuanx-llm-server.xverse.cn/prd/computing/v1/task/training/reportStatus"},{"name":"POD_NAME","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.name"}}},{"name":"MASTER_IP","value":"engine-test-a800-0.engine-test-a800-headless.test.svc.cluster.local"}],"image":"xverse-sh.tencentcloudcr.com/llm/megatron-training:cuda12.1-python3.8-torch2.0-fa2.06-tencent-nccl1.3","imagePullPolicy":"IfNotPresent","name":"engine-test-a800","resources":{"limits":{"cpu":"20","memory":"100Gi"},"requests":{"cpu":"20","memory":"100Gi"}},"securityContext":{"privileged":false},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/cfs/engine","name":"cfs-engine"},{"mountPath":"/dev/shm","name":"volume-emptydir1"},{"mountPath":"/etc/localtime","name":"host"}]},{"command":["bash","-c","sleep infinity"],"image":"xverse-sh.tencentcloudcr.com/llm/megatron-training:cuda12.1-python3.8-torch2.0-fa2.06-tencent-nccl1.3","imagePullPolicy":"IfNotPresent","name":"engine-test-a800-tmp","resources":{"limits":{"nvidia.com/gpu":"1"},"requests":{"nvidia.com/gpu":"1"}},"securityContext":{"privileged":false}}],"dnsPolicy":"ClusterFirst","hostNetwork":true,"imagePullSecrets":[{"name":"engine"}],"priorityClassName":"gpu-low-priority","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"tolerations":[{"effect":"NoSchedule","key":"gpu","operator":"Equal","value":"h800"},{"effect":"NoSchedule","key":"gpu","operator":"Equal","value":"a10"},{"effect":"NoSchedule","key":"gpu","operator":"Equal","value":"v100"},{"effect":"NoSchedule","key":"gpu","operator":"Equal","value":"l20"},{"effect":"NoSchedule","key":"worktype","operator":"Equal","value":"training"},{"effect":"NoSchedule","key":"gpu-pod-feature","operator":"Equal","value":"less8gpu"},{"effect":"NoSchedule","key":"worktype","operator":"Equal","value":"inf_online"},{"effect":"NoSchedule","key":"business","operator":"Equal","value":"triton-8gpu"}],"volumes":[{"name":"cfs-engine","nfs":{"path":"/","server":"192.168.114.22"}},{"emptyDir":{"medium":"Memory"},"name":"volume-emptydir1"},{"hostPath":{"path":"/etc/localtime","type":""},"name":"host"}]}},"updateStrategy":{"type":"OnDelete"}}}
+  creationTimestamp: "2024-10-14T12:55:20Z"
+  generation: 46
+  labels:
+    k8s-app: engine-test-a800
+    qcloud-app: engine-test-a800
+  managedFields:
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+      f:spec:
+        f:template:
+          f:spec:
+            f:containers:
+              k:{"name":"engine-test-a800-tmp"}:
+                .: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources:
+                  .: {}
+                  f:limits:
+                    .: {}
+                    f:nvidia.com/gpu: {}
+                  f:requests:
+                    .: {}
+                    f:nvidia.com/gpu: {}
+                f:securityContext:
+                  .: {}
+                  f:privileged: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2024-10-17T08:22:00Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:labels:
+          .: {}
+          f:k8s-app: {}
+          f:qcloud-app: {}
+      f:spec:
+        f:podManagementPolicy: {}
+        f:replicas: {}
+        f:revisionHistoryLimit: {}
+        f:selector: {}
+        f:serviceName: {}
+        f:template:
+          f:metadata:
+            f:annotations:
+              .: {}
+              f:qcloud-redeploy-timestamp: {}
+            f:labels:
+              .: {}
+              f:k8s-app: {}
+              f:qcloud-app: {}
+          f:spec:
+            f:affinity:
+              .: {}
+              f:nodeAffinity:
+                .: {}
+                f:requiredDuringSchedulingIgnoredDuringExecution: {}
+              f:podAntiAffinity:
+                .: {}
+                f:requiredDuringSchedulingIgnoredDuringExecution: {}
+            f:containers:
+              k:{"name":"engine-test-a800"}:
+                .: {}
+                f:command: {}
+                f:env:
+                  .: {}
+                  k:{"name":"BASH_ENV"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"COMPUTING_PLATFORM_REPORT_URL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"COMPUTING_PLATFORM_TASKID"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"CUDA_CACHE_DISABLE"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"CUDA_MODULE_LOADING"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"JUPYTER_PORT"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"LC_ALL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"MASTER_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"NVIDIA_DRIVER_CAPABILITIES"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"NVIDIA_REQUIRE_CUDA"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"POD_IP"}:
+                    .: {}
+                    f:name: {}
+                    f:valueFrom:
+                      .: {}
+                      f:fieldRef: {}
+                  k:{"name":"POD_NAME"}:
+                    .: {}
+                    f:name: {}
+                    f:valueFrom:
+                      .: {}
+                      f:fieldRef: {}
+                  k:{"name":"PYTHONIOENCODING"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SHELL"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"SSH_OPTIONS"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                  k:{"name":"TORCH_CUDA_ARCH_LIST"}:
+                    .: {}
+                    f:name: {}
+                    f:value: {}
+                f:image: {}
+                f:imagePullPolicy: {}
+                f:name: {}
+                f:resources:
+                  .: {}
+                  f:limits:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                  f:requests:
+                    .: {}
+                    f:cpu: {}
+                    f:memory: {}
+                f:securityContext:
+                  .: {}
+                  f:privileged: {}
+                f:terminationMessagePath: {}
+                f:terminationMessagePolicy: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/cfs/engine"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/dev/shm"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/etc/localtime"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+              k:{"name":"engine-test-a800-tmp"}:
+                f:command: {}
+                f:image: {}
+                f:resources:
+                  f:limits:
+                    f:cpu: {}
+                    f:memory: {}
+                  f:requests:
+                    f:cpu: {}
+                    f:memory: {}
+                f:volumeMounts:
+                  .: {}
+                  k:{"mountPath":"/cfs/engine"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+                  k:{"mountPath":"/dev/shm"}:
+                    .: {}
+                    f:mountPath: {}
+                    f:name: {}
+            f:dnsPolicy: {}
+            f:hostNetwork: {}
+            f:imagePullSecrets:
+              .: {}
+              k:{"name":"engine"}: {}
+            f:priorityClassName: {}
+            f:restartPolicy: {}
+            f:schedulerName: {}
+            f:securityContext: {}
+            f:terminationGracePeriodSeconds: {}
+            f:tolerations: {}
+            f:volumes:
+              .: {}
+              k:{"name":"cfs-engine"}:
+                .: {}
+                f:name: {}
+                f:nfs:
+                  .: {}
+                  f:path: {}
+                  f:server: {}
+              k:{"name":"host"}:
+                .: {}
+                f:hostPath:
+                  .: {}
+                  f:path: {}
+                  f:type: {}
+                f:name: {}
+              k:{"name":"volume-emptydir1"}:
+                .: {}
+                f:emptyDir:
+                  .: {}
+                  f:medium: {}
+                f:name: {}
+        f:updateStrategy:
+          f:type: {}
+    manager: tke-platform-api
+    operation: Update
+    time: "2024-10-18T06:46:15Z"
+  - apiVersion: apps/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:collisionCount: {}
+        f:currentRevision: {}
+        f:observedGeneration: {}
+        f:replicas: {}
+        f:updateRevision: {}
+    manager: kube-controller-manager
+    operation: Update
+    subresource: status
+    time: "2024-12-13T08:33:42Z"
+  name: engine-test-a800
+  namespace: test
+  resourceVersion: "42344287551"
+  selfLink: /apis/apps/v1/namespaces/test/statefulsets/engine-test-a800
+  uid: 59c5d926-ddba-47d7-910c-27f031bfd1a7
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 0
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: engine-test-a800
+      qcloud-app: engine-test-a800
+  serviceName: engine-test-a800-headless
+  template:
+    metadata:
+      annotations:
+        qcloud-redeploy-timestamp: "1729233973910"
+      creationTimestamp: null
+      labels:
+        k8s-app: engine-test-a800
+        qcloud-app: engine-test-a800
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: gpuName
+                operator: In
+                values:
+                - A800
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - engine-test-a800
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - command:
+        - bash
+        - -c
+        - sleep infinity
+        env:
+        - name: BASH_ENV
+          value: /etc/bash.bashrc
+        - name: CUDA_MODULE_LOADING
+          value: LAZY
+        - name: LC_ALL
+          value: C.UTF-8
+        - name: TORCH_CUDA_ARCH_LIST
+          value: 5.2 6.0 6.1 7.0 7.5 8.0 8.6+PTX
+        - name: PYTHONIOENCODING
+          value: utf-8
+        - name: SHELL
+          value: /bin/bash
+        - name: NVIDIA_REQUIRE_CUDA
+          value: cuda>=9.0
+        - name: SSH_OPTIONS
+          value: -o PasswordAuthentication=no -o StrictHostKeyChecking=no
+        - name: CUDA_CACHE_DISABLE
+          value: "1"
+        - name: JUPYTER_PORT
+          value: "8888"
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: compute,utility,video
+        - name: COMPUTING_PLATFORM_TASKID
+          value: 55764299cd75d4a8d0e6b82c49078206
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        - name: COMPUTING_PLATFORM_REPORT_URL
+          value: http://prd-yuanx-llm-server.xverse.cn/prd/computing/v1/task/training/reportStatus
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: MASTER_IP
+          value: engine-test-a800-0.engine-test-a800-headless.test.svc.cluster.local
+        image: xverse-sh.tencentcloudcr.com/llm/megatron-training:cuda12.1-python3.8-torch2.0-fa2.06-tencent-nccl1.3
+        imagePullPolicy: IfNotPresent
+        name: engine-test-a800
+        resources:
+          limits:
+            cpu: "20"
+            memory: 100Gi
+          requests:
+            cpu: "20"
+            memory: 100Gi
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /cfs/engine
+          name: cfs-engine
+        - mountPath: /dev/shm
+          name: volume-emptydir1
+        - mountPath: /etc/localtime
+          name: host
+      - command:
+        - bash
+        - -c
+        - nvidia-smi --query-gpu=pci.bus_id --format=csv,noheader | head -n 1 > /dev/shm/get_cuda_pci.txt
+          && sleep infinity
+        image: xverse-sh.tencentcloudcr.com/graphic-engine/train_and_inference:common_ubuntu20.04_cuda12.1_cudnn8
+        imagePullPolicy: IfNotPresent
+        name: engine-test-a800-tmp
+        resources:
+          limits:
+            cpu: "1"
+            memory: 1Gi
+            nvidia.com/gpu: "1"
+          requests:
+            cpu: "1"
+            memory: 1Gi
+            nvidia.com/gpu: "1"
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /cfs/engine
+          name: cfs-engine
+        - mountPath: /dev/shm
+          name: volume-emptydir1
+      dnsPolicy: ClusterFirst
+      hostNetwork: true
+      imagePullSecrets:
+      - name: engine
+      priorityClassName: gpu-low-priority
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: gpu
+        operator: Equal
+        value: h800
+      - effect: NoSchedule
+        key: gpu
+        operator: Equal
+        value: a10
+      - effect: NoSchedule
+        key: gpu
+        operator: Equal
+        value: v100
+      - effect: NoSchedule
+        key: gpu
+        operator: Equal
+        value: l20
+      - effect: NoSchedule
+        key: worktype
+        operator: Equal
+        value: training
+      - effect: NoSchedule
+        key: gpu-pod-feature
+        operator: Equal
+        value: less8gpu
+      - effect: NoSchedule
+        key: worktype
+        operator: Equal
+        value: inf_online
+      - effect: NoSchedule
+        key: business
+        operator: Equal
+        value: triton-8gpu
+      volumes:
+      - name: cfs-engine
+        nfs:
+          path: /
+          server: 192.168.114.22
+      - emptyDir:
+          medium: Memory
+        name: volume-emptydir1
+      - hostPath:
+          path: /etc/localtime
+          type: ""
+        name: host
+  updateStrategy:
+    type: RollingUpdate
+status:
+  collisionCount: 0
+  currentRevision: engine-test-a800-5b87f4cbd
+  observedGeneration: 46
+  replicas: 0
+  updateRevision: engine-test-a800-5b87f4cbd
