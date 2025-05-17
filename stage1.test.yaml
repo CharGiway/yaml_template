@@ -1,0 +1,98 @@
+data:
+  train_bs: 8
+  train_width: 512
+  train_height: 512
+  meta_paths:
+    - '/cfs/engine/data/data_to_copy/HDTF_1s/stage2.json'
+
+    - '/cfs/engine/data/data_to_copy/celebv_hq/stage2.json'
+    - '/cfs/engine/data/data_to_copy/celebv_hq/stage2.json'
+
+    - '/cfs/engine/data/data_to_copy/lrs3/stage2.json'
+
+    - '/cfs/engine/data/data_to_copy/xface_emo/stage2.json'
+    - '/cfs/engine/data/data_to_copy/xface_emo/stage2.json'
+    - '/cfs/engine/data/data_to_copy/xface_emo/stage2.json'
+    - '/cfs/engine/data/data_to_copy/xface_emo/stage2.json'
+    
+    - '/cfs/engine/data/data_to_copy/record20240523/stage2.json'
+    - '/cfs/engine/data/data_to_copy/record20240523/stage2.json'
+    - '/cfs/engine/data/data_to_copy/record20240523/stage2.json'
+
+  sample_margin: 50
+
+solver:
+  gradient_accumulation_steps: 1
+  mixed_precision: "no"
+  enable_xformers_memory_efficient_attention: True
+  gradient_checkpointing: False
+  max_train_steps: 200000
+  max_grad_norm: 1.0
+  # lr
+  learning_rate: 1.0e-5
+  scale_lr: False
+  lr_warmup_steps: 1
+  lr_scheduler: "constant"
+
+  # optimizer
+  use_8bit_adam: False
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  adam_weight_decay: 1.0e-2
+  adam_epsilon: 1.0e-8
+
+val:
+  validation_steps: 2500
+
+noise_scheduler_kwargs:
+  num_train_timesteps: 1000
+  beta_start: 0.00085
+  beta_end: 0.012
+  beta_schedule: "scaled_linear"
+  steps_offset: 1
+  clip_sample: false
+
+base_model_path: "./pretrained_models/stable-diffusion-v1-5/"
+vae_model_path: "./pretrained_models/sd-vae-ft-mse"
+face_analysis_model_path: "./pretrained_models/face_analysis"
+
+weight_dtype: "fp32" # [fp16, fp32]
+uncond_ratio: 0.1
+noise_offset: 0.05
+snr_gamma: 5.0
+enable_zero_snr: True
+face_locator_pretrained: False
+
+seed: 42
+resume_from_checkpoint: "latest"
+checkpointing_steps: 5000
+# exp_name: "10.9_FLM1_noeye"
+# exp_name: "10.2_FLM1_nojaw_bs8"
+
+exp_name: "tmp_stage1_testmulti"
+output_dir: "./FLM_exp_output"
+
+ref_image_paths:
+  - "examples/reference_images/PD2_6.jpg"
+  - "examples/reference_images/EDT_6.jpg"
+  - "examples/reference_images/5.jpg"
+  - "examples/reference_images/2.jpg"
+  - "examples/reference_images/4.jpg"
+  - "examples/reference_images/demo2.jpg"
+  - "examples/reference_images/vasa.jpg"
+  - "examples/reference_images/EDT_smile.jpg"
+  - "examples/reference_images/smile.jpg"
+  - "examples/reference_images/PD2_smile.jpg"
+  - "examples/reference_images/PD_0102.png"
+  - "examples/reference_images/PD2_CPSbvarBtO4_0055.png"
+  - "examples/reference_images/1yJbHfbkRgQ_0006.png"
+
+
+mask_image_paths:
+  # - "examples/masks/1.png"
+  # - "examples/masks/6.png"
+  # - "examples/masks/6cropped.png"
+  # - "examples/masks/smile.png"
+  # - "examples/masks/smile.png"
+
+use_face_mask: False
